@@ -28,7 +28,7 @@ sudo reboot
 
 ## Clone the script
 <pre>
-git clone https://github.com/geekworm-com/script-test
+git clone https://github.com/geekworm-com/xscript
 
 cd script-test
 chmod +x *.sh
@@ -76,3 +76,8 @@ Hardware safe shutdown operation:
 * press on-board button switch 1-2 seconds to reboot
 * press button switch 3 seconds to safe shutdown,
 * press 7-8 seconds to force shutdown.
+
+## Other
+`fan-rpi.py` and `fan-pigpio.py` are no longer used, and are reserved here for research and use by python lovers only.
+
+Email: info@geekworm.com
