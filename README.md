@@ -30,7 +30,7 @@ sudo reboot
 <pre>
 git clone https://github.com/geekworm-com/xscript
 
-cd script-test
+cd xscript
 chmod +x *.sh
 </pre>
 
