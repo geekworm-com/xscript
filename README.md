@@ -3,6 +3,8 @@ This is script installation tutorial for `NASPi`, `NASPi Gemini 2.5`, `NASPi CM4
 ***
 The original pwm fan control script is from [pimlie/geekworm-x-c1](https://github.com/pimlie/geekworm-x-c1), **pimlie** implements the pwm fan shell script, which does not depend on third-party python libraries at all. Thanks to **pimlie**.
 
+User Guide: https://wiki.geekworm.com/XScript
+
 ## OS that has been tested
 * Raspbian
 * DietPi
