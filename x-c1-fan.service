@@ -1,0 +1,10 @@
+[Unit]
+Description=Daemon to monitor and control fan speed
+
+[Service]
+ExecStart=/usr/local/bin/x-c1-fan.sh
+Type=simple
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
