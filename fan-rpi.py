@@ -6,6 +6,7 @@ import RPi.GPIO as IO
 import time
 import subprocess
 
+
 servo = 18
 
 IO.setwarnings(False)

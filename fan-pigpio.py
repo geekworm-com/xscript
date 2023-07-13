@@ -2,6 +2,7 @@
 import pigpio
 import time
 
+
 servo = 18
 
 pwm = pigpio.pi()
