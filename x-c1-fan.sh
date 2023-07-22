@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # The pwm methods are a bash implementation of https://github.com/Pioreactor/rpi_hardware_pwm
-
+# On the Raspberry Pi, add dtoverlay=pwm-2chan to /boot/config.txt. This defaults to GPIO_18 as the pin for PWM0 and GPIO_19 as the pin for PWM1.
 PWM_CHANNEL=0
 PWM_HERTZ=2000
 PWM_CHIP_PATH=/sys/class/pwm/pwmchip0
@@ -51,10 +51,10 @@ function pwm_get_channel_path {
     fi
 }
 
-# Export the given pwm channel 
+# Export the given pwm channel
 function pwm_create {
     local CHANNEL="$1"
-    
+
     PWM_CHANNEL_PATH="$(pwm_get_channel_path "$CHANNEL")"
     if [ ! -d "$PWM_CHANNEL_PATH" ]; then
         echo "$CHANNEL" > "$(pwm_get_chip_path "export")"
