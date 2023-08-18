@@ -1,0 +1,4 @@
+1. The code for fan speed control is now in the x-c1-fan.sh file.
+2. fan-rpi.py and fan-pigpio.py are no longer used, and are reserved here for research and use by python lovers only.
+
+ Email: support@geekworm.com
