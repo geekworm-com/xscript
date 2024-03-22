@@ -14,6 +14,8 @@ if [ -f "$file_path" ]; then
     sudo rm -f "$file_path"    
 fi
 
+sudo sed -i '/dtoverlay=pwm-2chan/d' /boot/firmware/config.txt
+
 # Uninstall x-c1-pwr.service
 sudo systemctl stop x-c1-pwr
 sudo systemctl disable x-c1-pwr
@@ -28,7 +30,6 @@ if [ -f "$file_path" ]; then
 fi
 
 file_path="/usr/local/bin/xgpio_pwr"
-
 if [ -f "$file_path" ]; then    
     sudo rm -f "$file_path"    
 fi
