@@ -7,9 +7,9 @@ User Guide: https://wiki.geekworm.com/XScript
 
 Email：support@geekworm.com
 
-# x708-script
+# xscript
 
-User Guide: https://wiki.geekworm.com/X708-script
+User Guide: https://github.com/geekworm-com/xscript
 
 Email: support@geekworm.com!
 
