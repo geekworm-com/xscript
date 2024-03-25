@@ -24,12 +24,7 @@ if [ -f "$file_path" ]; then
     sudo rm -f "$file_path"    
 fi
 
-file_path="/usr/local/bin/x-c1-pwr.sh"
-if [ -f "$file_path" ]; then    
-    sudo rm -f "$file_path"    
-fi
-
-file_path="/usr/local/bin/xgpio_pwr"
+file_path="/usr/local/bin/xPWR.sh"
 if [ -f "$file_path" ]; then    
     sudo rm -f "$file_path"    
 fi
@@ -37,13 +32,7 @@ fi
 # Remove the xoff allias on .bashrc file
 sudo sed -i '/xoff/d' ~/.bashrc
 source ~/.bashrc
-
-file_path="/usr/local/bin/x-c1-softsd.sh"
-if [ -f "$file_path" ]; then    
-    sudo rm -f "$file_path"    
-fi
-
-file_path="/usr/local/bin/xgpio_soft"
+file_path="/usr/local/bin/xSoft.sh"
 if [ -f "$file_path" ]; then    
     sudo rm -f "$file_path"    
 fi
