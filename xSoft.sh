@@ -4,7 +4,7 @@
 
 # 检查是否提供了足够的命令行参数
 if [ "$#" -ne 2 ]; then
-    echo "Usage: $0 <gpio_chip> <button_pin>" >&2
+    echo "Usage: $0 <pwm_chip> <button_pin>" >&2
     exit 1
 fi
 
@@ -17,7 +17,7 @@ SLEEP=2
 
 re='^[0-9\.]+$'
 if ! [[ $PWMCHIP =~ $re ]] ; then
-   echo "error: gpio_chip is not a number" >&2; exit 1
+   echo "error: pwm_chip is not a number" >&2; exit 1
 fi
 
 if ! [[ $BUTTON =~ $re ]] ; then

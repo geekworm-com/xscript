@@ -15,7 +15,7 @@ BOOT=$3
 # Checks if the passed parameter is an integer
 re='^[0-9\.]+$'
 if ! [[ $GPIOCHIP =~ $re ]] ; then
-   echo "error: pwm_chip is not a number" >&2; exit 1
+   echo "error: gpio_chip is not a number" >&2; exit 1
 fi
 
 if ! [[ $SHUTDOWN =~ $re ]] ; then
