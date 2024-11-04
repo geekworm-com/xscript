@@ -181,7 +181,9 @@ function __main__ {
     TEMP="$(get_temp)"
     DUTY_CYCLE=0
 
-    printf -v CUR_TEMP %0.0f "$TEMP" # Convert float to int
+    CUR_TEMP=${TEMP/.*}  # This does now work as intended    
+    # printf -v CUR_TEMP %0.0f "$TEMP"  # Convert float to int, but does not work, original method, now commented out
+
     if [ "$CUR_TEMP" -ge 75 ]; then
       DUTY_CYCLE=100
     elif [ "$CUR_TEMP" -ge 70 ]; then
