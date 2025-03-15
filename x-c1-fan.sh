@@ -163,7 +163,8 @@ function pwm_cleanup {
 # Get the raspberry pi temperature as float with 2 decimals
 function get_temp {
   RAW_TEMP="$(cat /sys/class/thermal/thermal_zone0/temp)"
-  TEMP="$(awk -v temp="$RAW_TEMP" 'BEGIN { printf "%0.2f", temp / 1000; exit(0) }')"
+  # TEMP="$(awk -v temp="$RAW_TEMP" 'BEGIN { printf "%0.2f", temp / 1000; exit(0) }')"
+  TEMP=$(echo "scale=2; $RAW_TEMP / 1000" | bc)
   echo "$TEMP"
 }
 
@@ -181,7 +182,8 @@ function __main__ {
     TEMP="$(get_temp)"
     DUTY_CYCLE=0
 
-    CUR_TEMP=${TEMP/.*}  # This does now work as intended    
+    # Convert float to inter
+    CUR_TEMP=${TEMP%.*}  # This does now work as intended    
     # printf -v CUR_TEMP %0.0f "$TEMP"  # Convert float to int, but does not work, original method, now commented out
 
     if [ "$CUR_TEMP" -ge 75 ]; then
