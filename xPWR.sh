@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# In October 2025, the Raspberry Pi OS was updated from Bookworm to Trixie. The libgpiod library in Trixie has been upgraded to version 2.2.1. 
+# In October 2025, the Raspberry Pi OS was updated from Bookworm to Trixie. The libgpiod library in Trixie has been upgraded to version 2.2.1.
 # The syntax of the gpioset command has changed, so harry@geekworm.com updated this script.
-# Refer to https://libgpiod.readthedocs.io/en/latest/gpio_tools.html#examples
+# Refer to https://libgpiod.readthedocs.io/en/master/gpio_tools.html#examples
 
 # Global debugging switch (0=off, 1=on)
 DEBUG=0
@@ -55,21 +55,18 @@ main() {
   local output
 
   # Initialize the BOOT pin to 1
-  # 必须加上-t0参数，否则堵塞在这里了。
-  gpioset -c $GPIOCHIP -t0 $BOOT=1
+    # The -t0 parameter must be added, otherwise it will be blocked here.
+  # gpioset -c $GPIOCHIP -t0 $BOOT=1
+  gpioset -z -c $GPIOCHIP $BOOT=1
 
   while [ 1 ]; do
-    output=$(gpioget -c $GPIOCHIP $SHUTDOWN)
-    # "5"=inactive, get the string after =
-    shutdownSignal=$(echo "$output" | awk -F '=' '{print $NF}' | tr -d '"')
-    #logdebug $output
-    logdebug $shutdownSignal
-    if [ "$shutdownSignal" = "inactive" ]; then
+    shutdownSignal=$(gpioget --numeric -c $GPIOCHIP $SHUTDOWN)
+
+    if [ $shutdownSignal -eq 0 ]; then
       sleep 0.2
     else
       pulseStart=$(date +%s%N | cut -b1-13)
-
-      while [ "$shutdownSignal" = "active" ]; do
+      while [ $shutdownSignal -eq 1 ]; do
         sleep 0.02
         if [ $(($(date +%s%N | cut -b1-13)-$pulseStart)) -gt $REBOOTPULSEMAXIMUM ]; then
           echo "Your device is shutting down on pin $SHUTDOWN, halting Rpi ..."
@@ -77,10 +74,7 @@ main() {
           exit
         fi
         # shutdownSignal=$(gpioget $GPIOCHIP $SHUTDOWN)
-        output=$(gpioget -c $GPIOCHIP $SHUTDOWN)
-        shutdownSignal=$(echo "$output" | awk -F '=' '{print $NF}' | tr -d '"')
-        #logdebug $output
-        logdebug $shutdownSignal
+        shutdownSignal=$(gpioget --numeric -c $GPIOCHIP $SHUTDOWN)
       done
       if [ $(($(date +%s%N | cut -b1-13)-$pulseStart)) -gt $REBOOTPULSEMINIMUM ]; then
         echo "Your device is rebooting on pin $SHUTDOWN, recycling Rpi ..."

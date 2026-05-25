@@ -30,12 +30,12 @@ fi
 
 echo "Your device will be shutting down in $SLEEP seconds..."
 
-# gpioset -c $GPIOCHIP -p 3s -t0 $BUTTON=1
-gpioset -c $GPIOCHIP -t0 $BUTTON=1
+# gpioset -z -c $GPIOCHIP $BUTTON=1
+gpioset -c $GPIOCHIP -p 2s $BUTTON=1
 
-sleep $SLEEP
+#sleep $SLEEP
 
 # Restore GPIO
 # This step is necessary, otherwise you will have to press the onboard button twice to turn on the device, and the same applies to the AUTO ON function.
-gpioset -c $GPIOCHIP -t0 $BUTTON=0
-#gpioset -c $GPIOCHIP -p 20ms -t0 $BUTTON=0
+#gpioset -c $GPIOCHIP -t0 $BUTTON=0
+gpioset -z -c $GPIOCHIP $BUTTON=0
