@@ -7,7 +7,7 @@
 # Global debugging switch (0=off, 1=on)
 DEBUG=0
 
-#  Use gpiod instead of obsolete interface, and suuports ubuntu 23.04 also
+# Use gpiod instead of the obsolete GPIO interface.
 # Log debug info, only when DEBUG=1 above
 function logdebug {
     if [ "$DEBUG" -eq 1 ]; then
@@ -27,14 +27,14 @@ main() {
 
   # Make sure enough parameters are passed in
   if [ "$#" -ne 3 ]; then
-    echo "Usage: $0 <pwm_chip> <shutdown_pin> <boot_pin>"
+    echo "Usage: $0 <gpio_chip> <shutdown_pin> <boot_pin>"
     exit 1
   fi
 
   # Checks if the passed parameter is an integer
-  re='^[0-9\.]+$'
+  re='^[0-9]+$'
   if ! [[ $GPIOCHIP =~ $re ]] ; then
-    logerr "error: pwm_chip is not a number"
+    logerr "error: gpio_chip is not a number"
     exit 1
   fi
 
@@ -44,7 +44,7 @@ main() {
   fi
 
   if ! [[ $BOOT =~ $re ]] ; then
-    logerr "error: button_pin is not a number"
+    logerr "error: boot_pin is not a number"
     exit 1
   fi
 
@@ -52,11 +52,8 @@ main() {
   local REBOOTPULSEMAXIMUM=600
   local pulseStart
   local shutdownSignal
-  local output
 
-  # Initialize the BOOT pin to 1
-    # The -t0 parameter must be added, otherwise it will be blocked here.
-  # gpioset -c $GPIOCHIP -t0 $BOOT=1
+  # Drive the BOOT pin high and daemonize to maintain the output.
   gpioset -z -c $GPIOCHIP $BOOT=1
 
   while [ 1 ]; do
@@ -73,7 +70,6 @@ main() {
           sudo poweroff
           exit
         fi
-        # shutdownSignal=$(gpioget $GPIOCHIP $SHUTDOWN)
         shutdownSignal=$(gpioget --numeric -c $GPIOCHIP $SHUTDOWN)
       done
       if [ $(($(date +%s%N | cut -b1-13)-$pulseStart)) -gt $REBOOTPULSEMINIMUM ]; then
